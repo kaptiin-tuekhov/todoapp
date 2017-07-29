@@ -17,3 +17,8 @@ export const updateTodos = (todos, updatedTodo) => {
     ...todos.slice(updateIndex + 1)
   ]
 }
+
+export const removeTodo = (todos, targetId) => {
+  const removeIndex = todos.findIndex(({ id }) => id === targetId)
+  return [...todos.slice(0, removeIndex), ...todos.slice(removeIndex + 1)]
+}

@@ -5,7 +5,8 @@ import {
   generateId,
   findById,
   toggleTodo,
-  updateTodos
+  updateTodos,
+  removeTodo
 } from './lib/todoHelpers'
 import { pipe, partial } from './lib/utils'
 import logo from './logo.svg'
@@ -19,6 +20,14 @@ class App extends Component {
       { id: 3, name: 'Ship', isComplete: false }
     ],
     currentTodo: ''
+  }
+
+  handleRemove = (id, evt) => {
+    evt.preventDefault()
+    this.setState(prevState => ({
+      ...prevState,
+      todos: removeTodo(prevState.todos, id)
+    }))
   }
 
   handleToggle = id => {
@@ -60,20 +69,20 @@ class App extends Component {
     }))
   }
 
-  render() {
+  render () {
     const { currentTodo, todos } = this.state
     const submitHandler = currentTodo
       ? this.handleSubmit
       : this.handleEmptySubmit
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+      <div className='App'>
+        <div className='App-header'>
+          <img src={logo} className='App-logo' alt='logo' />
           <h2>React Todos</h2>
         </div>
-        <div className="Todo-App">
+        <div className='Todo-App'>
           {this.state.errorMessage &&
-            <span className="error">
+            <span className='error'>
               {this.state.errorMessage}
             </span>}
           <TodoForm
@@ -81,7 +90,11 @@ class App extends Component {
             currentTodo={currentTodo}
             handleSubmit={submitHandler}
           />
-          <TodoList handleToggle={this.handleToggle} todos={todos} />
+          <TodoList
+            handleToggle={this.handleToggle}
+            todos={todos}
+            handleRemove={this.handleRemove}
+          />
         </div>
       </div>
     )
