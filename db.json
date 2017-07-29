@@ -1,0 +1,19 @@
+{
+    "todos": [
+        {
+            "id": 1,
+            "name": "Create React App",
+            "isComplete": true
+        },
+        {
+            "id": 2,
+            "name": "Create server",
+            "isComplete": false
+        },
+        {
+            "id": 3,
+            "name": "Redux refactor",
+            "isComplete": false
+        }
+    ]
+}

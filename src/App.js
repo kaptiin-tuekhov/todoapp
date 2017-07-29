@@ -11,21 +11,24 @@ import {
   filterTodos
 } from './lib/todoHelpers'
 import { pipe, partial } from './lib/utils'
+import { loadTodos } from './lib/todoService'
 import logo from './logo.svg'
 import './App.css'
 
 class App extends Component {
   state = {
-    todos: [
-      { id: 1, name: 'Learn JSX', isComplete: true },
-      { id: 2, name: 'Build', isComplete: false },
-      { id: 3, name: 'Ship', isComplete: false }
-    ],
+    todos: [],
     currentTodo: ''
   }
 
   static contextTypes = {
     route: PropTypes.string
+  }
+
+  componentDidMount () {
+    loadTodos().then(todos =>
+      this.setState(prevState => ({ ...prevState, todos }))
+    )
   }
 
   handleRemove = (id, evt) => {
