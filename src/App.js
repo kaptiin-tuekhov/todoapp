@@ -11,7 +11,7 @@ import {
   filterTodos
 } from './lib/todoHelpers'
 import { pipe, partial } from './lib/utils'
-import { loadTodos } from './lib/todoService'
+import { loadTodos, createTodo } from './lib/todoService'
 import logo from './logo.svg'
 import './App.css'
 
@@ -59,15 +59,19 @@ class App extends Component {
 
   handleSubmit = evt => {
     evt.preventDefault()
-    this.setState(({ currentTodo, todos }) => ({
-      todos: addTodo(todos, {
+    this.setState(({ currentTodo, todos }) => {
+      const newTodo = {
         name: currentTodo,
         isComplete: false,
         id: generateId()
-      }),
-      currentTodo: '',
-      errorMessage: ''
-    }))
+      }
+      createTodo(newTodo).then(() => console.log('todo added'))
+      return {
+        todos: addTodo(todos, newTodo),
+        currentTodo: '',
+        errorMessage: ''
+      }
+    })
   }
 
   handleEmptySubmit = evt => {
