@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TodoForm } from './components/todo/TodoForm'
+import { TodoForm, TodoList } from './components/todo/'
 import logo from './logo.svg'
 import './App.css'
 
@@ -21,6 +21,7 @@ class App extends Component {
     this.setState(prevState => ({ ...prevState, currentTodo: value }))
   }
   render () {
+    const {currentTodo, todos} = this.state
     return (
       <div className='App'>
         <div className='App-header'>
@@ -30,18 +31,9 @@ class App extends Component {
         <div className='Todo-App'>
           <TodoForm
             handleInputChange={this.handleInputChange}
-            currentTodo={this.state.currentTodo}
+            currentTodo={currentTodo}
           />
-          <div>
-            <ul>
-              {this.state.todos.map(({ id, name, isComplete }) =>
-                <li key={id}>
-                  <input type='checkbox' defaultChecked={isComplete} />
-                  {name}
-                </li>
-              )}
-            </ul>
-          </div>
+          <TodoList todos={todos} />
         </div>
       </div>
     )
