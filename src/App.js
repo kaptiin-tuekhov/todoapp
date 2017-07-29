@@ -11,7 +11,7 @@ import {
   filterTodos
 } from './lib/todoHelpers'
 import { pipe, partial } from './lib/utils'
-import { loadTodos, createTodo } from './lib/todoService'
+import { loadTodos, createTodo, saveTodo } from './lib/todoService'
 import logo from './logo.svg'
 import './App.css'
 
@@ -41,14 +41,16 @@ class App extends Component {
 
   handleToggle = id => {
     this.setState(prevState => {
-      const getUpdatedTodos = pipe(
+      const getToggledTodo = pipe(
         findById,
-        toggleTodo,
-        partial(updateTodos, prevState.todos)
+        toggleTodo
       )
+      const updated = getToggledTodo(id, prevState.todos)
+      const getUpdatedTodos = partial(updateTodos, prevState.todos)
+      saveTodo(updated).then(() => this.showTempMessage('Updated Todo'))
       return {
         ...prevState,
-        todos: getUpdatedTodos(id, prevState.todos)
+        todos: getUpdatedTodos(updated)
       }
     })
   }
