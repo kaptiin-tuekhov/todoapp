@@ -66,7 +66,7 @@ class App extends Component {
       const newTodo = {
         name: currentTodo,
         isComplete: false,
-        id: generateId()
+        id: `${generateId()}`
       }
       createTodo(newTodo).then(() =>
         this.showTempMessage('Todo added')

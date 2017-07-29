@@ -26,7 +26,7 @@ export const TodoItem = ({
 TodoItem.propTypes = {
   name: PropTypes.string.isRequired,
   isComplete: PropTypes.bool,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   handleToggle: PropTypes.func.isRequired,
   handleRemove: PropTypes.func.isRequired
 }
