@@ -42,10 +42,7 @@ class App extends Component {
 
   handleToggle = id => {
     this.setState(prevState => {
-      const getToggledTodo = pipe(
-        findById,
-        toggleTodo
-      )
+      const getToggledTodo = pipe(findById, toggleTodo)
       const updated = getToggledTodo(id, prevState.todos)
       const getUpdatedTodos = partial(updateTodos, prevState.todos)
       saveTodo(updated).then(() => this.showTempMessage('Updated Todo'))
@@ -63,14 +60,23 @@ class App extends Component {
   handleSubmit = evt => {
     evt.preventDefault()
     this.setState(({ currentTodo, todos }) => {
+      const fakeId = `${generateId()}`
       const newTodo = {
         name: currentTodo,
         isComplete: false,
-        id: `${generateId()}`
+        id: fakeId
       }
-      createTodo(newTodo).then(() =>
+      createTodo(newTodo).then(todo => {
+        this.setState(prevState => {
+          const todosNoFake = removeTodo(prevState.todos, fakeId)
+          const finalTodos = addTodo(todosNoFake, todo)
+          return {
+            ...prevState,
+            todos: finalTodos
+          }
+        })
         this.showTempMessage('Todo added')
-      )
+      })
       return {
         todos: addTodo(todos, newTodo),
         currentTodo: '',
@@ -84,10 +90,14 @@ class App extends Component {
       ...prevState,
       message: msg
     }))
-    setTimeout(() => this.setState(prevState => ({
-      ...prevState,
-      message: ''
-    })), 2500)
+    setTimeout(
+      () =>
+        this.setState(prevState => ({
+          ...prevState,
+          message: ''
+        })),
+      2500
+    )
   }
 
   handleEmptySubmit = evt => {
