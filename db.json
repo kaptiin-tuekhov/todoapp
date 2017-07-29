@@ -14,41 +14,6 @@
       "id": 3,
       "name": "Redux refactor",
       "isComplete": false
-    },
-    {
-      "name": "asdfasdf",
-      "isComplete": true,
-      "id": 947609
-    },
-    {
-      "name": "test",
-      "isComplete": false,
-      "id": 965088
-    },
-    {
-      "name": "test",
-      "isComplete": true,
-      "id": 411328
-    },
-    {
-      "name": "upload",
-      "isComplete": false,
-      "id": 339322
-    },
-    {
-      "name": "upload again",
-      "isComplete": false,
-      "id": 858784
-    },
-    {
-      "name": "Woop",
-      "isComplete": false,
-      "id": 325449
-    },
-    {
-      "name": "green",
-      "isComplete": false,
-      "id": 30174
     }
   ]
 }
