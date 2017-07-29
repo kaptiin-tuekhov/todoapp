@@ -1,6 +1,13 @@
 import React, { Component } from 'react'
 import { TodoForm, TodoList } from './components/todo/'
-import { addTodo, generateId, findById, toggleTodo, updateTodos } from './lib/todoHelpers'
+import {
+  addTodo,
+  generateId,
+  findById,
+  toggleTodo,
+  updateTodos
+} from './lib/todoHelpers'
+import { pipe, partial } from './lib/utils'
 import logo from './logo.svg'
 import './App.css'
 
@@ -16,13 +23,14 @@ class App extends Component {
 
   handleToggle = id => {
     this.setState(prevState => {
-      const {todos} = prevState
-      const todo = findById(id, todos)
-      const toggled = toggleTodo(todo)
-      console.log(toggled)
+      const getUpdatedTodos = pipe(
+        findById,
+        toggleTodo,
+        partial(updateTodos, prevState.todos)
+      )
       return {
         ...prevState,
-        todos: updateTodos(todos, toggled)
+        todos: getUpdatedTodos(id, prevState.todos)
       }
     })
   }
@@ -52,20 +60,20 @@ class App extends Component {
     }))
   }
 
-  render () {
+  render() {
     const { currentTodo, todos } = this.state
     const submitHandler = currentTodo
       ? this.handleSubmit
       : this.handleEmptySubmit
     return (
-      <div className='App'>
-        <div className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
+      <div className="App">
+        <div className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
           <h2>React Todos</h2>
         </div>
-        <div className='Todo-App'>
+        <div className="Todo-App">
           {this.state.errorMessage &&
-            <span className='error'>
+            <span className="error">
               {this.state.errorMessage}
             </span>}
           <TodoForm
