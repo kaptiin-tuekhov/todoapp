@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { TodoForm, TodoList, Footer } from './components/todo/'
 import {
   addTodo,
@@ -6,7 +7,8 @@ import {
   findById,
   toggleTodo,
   updateTodos,
-  removeTodo
+  removeTodo,
+  filterTodos
 } from './lib/todoHelpers'
 import { pipe, partial } from './lib/utils'
 import logo from './logo.svg'
@@ -20,6 +22,10 @@ class App extends Component {
       { id: 3, name: 'Ship', isComplete: false }
     ],
     currentTodo: ''
+  }
+
+  static contextTypes = {
+    route: PropTypes.string
   }
 
   handleRemove = (id, evt) => {
@@ -74,6 +80,7 @@ class App extends Component {
     const submitHandler = currentTodo
       ? this.handleSubmit
       : this.handleEmptySubmit
+    const displayTodos = filterTodos(todos, this.context.route)
     return (
       <div className='App'>
         <div className='App-header'>
@@ -92,7 +99,7 @@ class App extends Component {
           />
           <TodoList
             handleToggle={this.handleToggle}
-            todos={todos}
+            todos={displayTodos}
             handleRemove={this.handleRemove}
           />
           <Footer />

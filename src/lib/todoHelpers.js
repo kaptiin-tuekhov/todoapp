@@ -22,3 +22,14 @@ export const removeTodo = (todos, targetId) => {
   const removeIndex = todos.findIndex(({ id }) => id === targetId)
   return [...todos.slice(0, removeIndex), ...todos.slice(removeIndex + 1)]
 }
+
+export const filterTodos = (todos, route) => {
+  switch (route) {
+    case '/pending':
+      return todos.filter(todo => !todo.isComplete)
+    case '/completed':
+      return todos.filter(todo => todo.isComplete)
+    default:
+      return todos
+  }
+}
