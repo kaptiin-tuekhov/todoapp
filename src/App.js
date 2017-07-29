@@ -11,7 +11,7 @@ import {
   filterTodos
 } from './lib/todoHelpers'
 import { pipe, partial } from './lib/utils'
-import { loadTodos, createTodo, saveTodo } from './lib/todoService'
+import { loadTodos, createTodo, saveTodo, destroyTodo } from './lib/todoService'
 import logo from './logo.svg'
 import './App.css'
 
@@ -33,6 +33,7 @@ class App extends Component {
 
   handleRemove = (id, evt) => {
     evt.preventDefault()
+    destroyTodo(id).then(() => this.showTempMessage('Deleted todo'))
     this.setState(prevState => ({
       ...prevState,
       todos: removeTodo(prevState.todos, id)

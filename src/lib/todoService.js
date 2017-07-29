@@ -21,4 +21,13 @@ export const saveTodo = todo =>
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(todo)
+  }).then(res => res.json())
+
+export const destroyTodo = id =>
+  fetch(`${baseUrl}/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
   })
