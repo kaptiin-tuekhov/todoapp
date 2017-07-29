@@ -5,7 +5,7 @@
     },
     {
       "name": "Create server",
-      "isComplete": false
+      "isComplete": true
     },
     {
       "name": "Redux refactor",
